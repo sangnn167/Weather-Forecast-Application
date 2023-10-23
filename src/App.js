@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { useCallback, useEffect, useState } from "react";
+import "./App.css";
 
-function App() {
+import { Abc } from "./components/Abc";
+import { Input } from "./components/Input";
+
+export const App = () => {
+  const [count, setCount] = useState(0);
+  const [object, setObject] = useState({
+    email: "",
+    name: "",
+  });
+
+  useEffect(() => {
+    console.log(count);
+
+    return () => {
+      console.log("unmount");
+    };
+  }, [count]);
+
+  const handleChangeObject = useCallback((value, key) => {
+    setObject((oldObject) => ({ ...oldObject, [key]: value }));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Abc count={count} setCount={setCount} />
+      <div>{object.name}</div>
+      <div>{object.email}</div>
+      {/* <Input
+        value={object.name}
+        onChange={(value) => handleChangeObject(value, "name")}
+        placeholder="123"
+      />
+      <Input
+        value={object.email}
+        onChange={(value) => handleChangeObject(value, "email")}
+        placeholder="234"
+      /> */}
     </div>
   );
-}
-
-export default App;
+};
