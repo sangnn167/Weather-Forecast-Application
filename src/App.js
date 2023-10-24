@@ -28,7 +28,7 @@ export const App = () => {
       <Abc count={count} setCount={setCount} />
       <div>{object.name}</div>
       <div>{object.email}</div>
-      {/* <Input
+      <Input
         value={object.name}
         onChange={(value) => handleChangeObject(value, "name")}
         placeholder="123"
@@ -37,7 +37,7 @@ export const App = () => {
         value={object.email}
         onChange={(value) => handleChangeObject(value, "email")}
         placeholder="234"
-      /> */}
+      />
     </div>
   );
 };

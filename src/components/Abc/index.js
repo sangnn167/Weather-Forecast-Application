@@ -3,7 +3,7 @@ import styles from "./styles.module.css";
 
 export const Abc = ({ count, setCount }) => {
   const [isLoading, setLoading] = useState(false);
-  const [array, setArray] = useState([
+  const [array] = useState([
     { title: "a", value: 123 },
     { title: "a", value: 123 },
     { title: "a", value: 123 },
