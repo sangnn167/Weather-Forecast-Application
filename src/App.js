@@ -1,43 +1,29 @@
-import { useCallback, useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
 
-import { Abc } from "./components/Abc";
-import { Input } from "./components/Input";
 
-export const App = () => {
-  const [count, setCount] = useState(0);
-  const [object, setObject] = useState({
-    email: "",
-    name: "",
-  });
 
-  useEffect(() => {
-    console.log(count);
+import { Header } from "./components/Header";
+import { FiveDayWeather } from "./components/FiveDayWeather";
+import { TemperatureToday } from "./components/TemperatureToday";
+import CurrentWeather from "./components/CurrentWeather";
 
-    return () => {
-      console.log("unmount");
-    };
-  }, [count]);
 
-  const handleChangeObject = useCallback((value, key) => {
-    setObject((oldObject) => ({ ...oldObject, [key]: value }));
-  }, []);
-
+const App = () => {
   return (
-    <div>
-      <Abc count={count} setCount={setCount} />
-      <div>{object.name}</div>
-      <div>{object.email}</div>
-      <Input
-        value={object.name}
-        onChange={(value) => handleChangeObject(value, "name")}
-        placeholder="123"
-      />
-      <Input
-        value={object.email}
-        onChange={(value) => handleChangeObject(value, "email")}
-        placeholder="234"
-      />
+    <div className="Container">
+      <Header/>
+      <h2>Weather in Hanoi</h2>
+      <CurrentWeather />
+      <div className={"current"}>
+        <FiveDayWeather />
+      </div>
+      <div className="FiveDayForecast">
+        <TemperatureToday/>
+      </div>
+      
     </div>
   );
 };
+
+export default App;

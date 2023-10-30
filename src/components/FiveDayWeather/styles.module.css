@@ -1,0 +1,33 @@
+.container{
+    margin-left: 30px;
+}
+.container ul{
+    display: flex;
+}
+.container ul li{
+    flex-direction: column;
+    display: flex;
+}
+.card {
+    background-color: #f0f0f0; /* Màu nền cho mỗi ngày */
+    padding: 10px;
+    margin-right: 20px; /* Khoảng cách giữa các ngày */
+    border-radius: 5px; /* Bo tròn góc của ngày */
+    background: rgba(41, 100, 159, 0.5);
+    width: 13vw;
+    color: white;
+}
+.item{
+    display: flex;
+}
+.tempmax{
+    margin-top: 5px;
+    font-size: 13px;
+}
+.description{
+    font-size: 13px;
+    margin-left: 10px;
+    margin-top: -9px;
+    text-align: center;
+}
+

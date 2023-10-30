@@ -1,0 +1,38 @@
+.description{
+    margin-left: 20px;
+    font-size: 18px;
+    margin-top: 30px;
+}
+.img{
+    display: flex;
+    font-size: 50px;
+    margin-top: -30px;
+}
+.currentBottom{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.container {
+    display: flex;
+  }
+  
+  .item {
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-right: 20px; 
+    border-radius: 5px; 
+    margin-top: 10px;
+    width: 200px;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+ 
+  }
+  .containerr{
+    margin-left: 30px;
+    color: #f0f0f0;
+  }
+  

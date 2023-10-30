@@ -1,0 +1,21 @@
+.container{
+    font-size: 15px;
+    background: rgba(41, 100, 159, 0.5);
+    width: 95%;
+    margin-left: 20px;
+    overflow-y: auto;
+    border-radius: 5px;
+    height: 180px;
+ }
+
+.container ul{
+    display: flex;
+}
+.container ul li{
+   margin: 0 30px;
+}
+.item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
