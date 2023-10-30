@@ -10,7 +10,7 @@ const CurrentWeather = () => {
 
   useEffect(() => {
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -43,12 +43,12 @@ const CurrentWeather = () => {
                     height="140"
                   />
                 )}
-                <p>{currentWeather.main.temp - 273.15}°C</p>
+                <p>{currentWeather.main.temp}°C</p>
                 <div className={styles.description}>
                   <p>{currentWeather.weather[0].description}</p>
                   <p>
                     Feels like{" "}
-                    {(currentWeather.main.feels_like * 9/5 - 459.67).toFixed(2)}°F
+                    {(currentWeather.main.feels_like)}
 
                   </p>
                 </div>

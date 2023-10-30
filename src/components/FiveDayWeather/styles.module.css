@@ -9,10 +9,10 @@
     display: flex;
 }
 .card {
-    background-color: #f0f0f0; /* Màu nền cho mỗi ngày */
+    background-color: #f0f0f0; 
     padding: 10px;
-    margin-right: 20px; /* Khoảng cách giữa các ngày */
-    border-radius: 5px; /* Bo tròn góc của ngày */
+    margin-right: 20px; 
+    border-radius: 10px; 
     background: rgba(41, 100, 159, 0.5);
     width: 13vw;
     color: white;

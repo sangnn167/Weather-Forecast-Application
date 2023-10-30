@@ -9,7 +9,7 @@ export const FiveDayWeather = () => {
   const city = "Hanoi";
   useEffect(() => {
     fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`
+      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -49,8 +49,8 @@ export const FiveDayWeather = () => {
                           height="50"
                         />
                         <div className={styles.tempmax}>
-                          {(item.main.temp_max - 273.15).toFixed(2)}°C
-                          <p>{(item.main.temp_min - 273.15).toFixed(2)}°C</p>
+                          {item.main.temp_max}°C
+                          <p>{(item.main.temp_min)}°C</p>
                         </div>
                         <div className={styles.description}>
                           {<p>{item.weather[0].description}</p>}
