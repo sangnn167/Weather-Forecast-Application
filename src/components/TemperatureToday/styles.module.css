@@ -1,8 +1,8 @@
 .container{
     font-size: 15px;
     background: rgba(41, 100, 159, 0.5);
-    width: 95%;
-    margin-left: 20px;
+    width: 82%;
+    margin-left: 100px;
     overflow-y: auto;
     border-radius: 10px;
     height: 180px;
