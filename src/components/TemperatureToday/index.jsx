@@ -1,37 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./styles.module.css";
 
-export const TemperatureToday = () => {
-  const [forecasts, setForecasts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); 
-
-  const apiKey = "5d724a92f04ed3bea360323546c88261";
-  const city = "Hanoi";
-
-  useEffect(() => {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setForecasts(data.list);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching current day forecast:", error);
-        setIsLoading(false);
-      });
-  }, []);
-
+export const TemperatureToday = ({ temperatureUnit, forecast, loading }) => {
   return (
     <div className={styles.container}>
-      {isLoading ? (
+      {loading ? (
         <div className={styles.loading}>Loading...</div>
       ) : (
-        forecasts.length > 0 && (
+        forecast?.length > 0 && (
           <div className={styles.card}>
             <ul>
-              {forecasts.map((item) => (
+              {forecast.map?.((item) => (
                 <li key={item.dt}>
                   {item.dt_txt}
                   <div className={styles.item}>
@@ -41,7 +20,10 @@ export const TemperatureToday = () => {
                       width="50"
                       height="50"
                     />
-                    {item.main.temp}°C
+                    <p>
+                      {item.main.temp}
+                      {temperatureUnit === "metric" ? "°C" : "°F"}
+                    </p>
                   </div>
                   {item.weather[0].description}
                 </li>

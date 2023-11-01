@@ -1,41 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styles from "./styles.module.css";
 
-const CurrentWeather = () => {
-  const [currentWeather, setCurrentWeather] = useState();
-  const [loading, setLoading] = useState(true);
-
-  const apiKey = "5d724a92f04ed3bea360323546c88261";
-  const city = "Hanoi";
-
-  useEffect(() => {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setCurrentWeather(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching current weather:", error);
-        setLoading(false);
-      });
-   
-  }, []);
-
+const CurrentWeather = ({ temperatureUnit, city, currentWeather, loading }) => {
   return (
     <div className={styles.containerr}>
-
       <div className={styles.currentWeather}>
         {loading ? (
           <p>Loading...</p>
-        ): (
+        ) : (
           currentWeather && (
             <div className={styles.current}>
-              <h4>Current weather</h4>
+              <h4>Current weather {city}</h4>
               <div className={styles.img}>
-                {currentWeather.weather[0].icon && (
+                {currentWeather.weather?.[0]?.icon && (
                   <img
                     src={`https://openweathermap.org/img/wn/${currentWeather.weather[0].icon}.png`}
                     alt="Weather Icon"
@@ -43,39 +20,37 @@ const CurrentWeather = () => {
                     height="140"
                   />
                 )}
-                <p>{currentWeather.main.temp}°C</p>
+                <p>
+                  {Number(currentWeather.main?.temp).toFixed(0)}
+                  {temperatureUnit === "metric" ? "°C" : "°F"}
+                </p>
                 <div className={styles.description}>
-                  <p>{currentWeather.weather[0].description}</p>
-                  <p>
-                    Feels like{" "}
-                    {(currentWeather.main.feels_like)}
-
-                  </p>
+                  <p>{currentWeather.weather?.[0]?.description}</p>
+                  <p>Feels like {currentWeather.main?.feels_like}</p>
                 </div>
               </div>
               <div className={styles.currentBottom}>
                 <div>
                   <p>Pressure</p>
-                  <p>{currentWeather.main.pressure} mb</p>
+                  <p>{currentWeather.main?.pressure} mb</p>
                 </div>
                 <div>
                   <p>Humidity</p>
-                  <p>{currentWeather.main.humidity}%</p>
+                  <p>{currentWeather.main?.humidity}%</p>
                 </div>
                 <div>
                   <p>Wind speed</p>
-                  <p>{currentWeather.wind.speed} m/s</p>
+                  <p>{currentWeather.wind?.speed} m/s</p>
                 </div>
                 <div>
                   <p>Visibility</p>
-                  <p>{currentWeather.visibility} m</p>
+                  <p>{currentWeather?.visibility} m</p>
                 </div>
               </div>
             </div>
           )
         )}
       </div>
-      
     </div>
   );
 };

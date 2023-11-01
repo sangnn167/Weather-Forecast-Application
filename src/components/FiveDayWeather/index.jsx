@@ -1,42 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./styles.module.css";
 
-export const FiveDayWeather = () => {
-  const [forecast, setForecast] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const apiKey = "5d724a92f04ed3bea360323546c88261";
-  const city = "Hanoi";
-  useEffect(() => {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        const currentDate = new Date();
-        const futureDates = data.list.filter((item) => {
-          // Lọc các mốc thời gian trong tương lai, bỏ qua ngày hiện tại
-          const itemDate = new Date(item.dt_txt);
-          return itemDate > currentDate;
-        });
-        setForecast(futureDates);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching 5-day forecast:", error);
-        setIsLoading(false);
-      });
-  }, []);
+export const FiveDayWeather = ({ temperatureUnit, city,forecast,loading}) => {
+  
 
   return (
     <div className={styles.container}>
       <h2>5-Day Forecast</h2>
-      {isLoading ? (
+      {loading ? (
         <div>Loading...</div>
       ) : (
         <div>
           <ul>
-            {forecast.map((item, index) => {
+            {forecast?.map((item, index) => {
               const dateTimeParts = item.dt_txt.split(" ");
               const date = dateTimeParts[0];
               if (
@@ -55,12 +31,18 @@ export const FiveDayWeather = () => {
                           height="50"
                         />
                         <div className={styles.tempmax}>
-                          {item.main.temp_max}°C
-                          <p>{item.main.temp_min}°C</p>
+                          <p>
+                            {item.main.temp_max}
+                            {temperatureUnit === "metric" ? "°C" : "°F"}
+                          </p>
+                          <p>
+                            {item.main.temp_min}
+                            {temperatureUnit === "metric" ? "°C" : "°F"}
+                          </p>
                         </div>
                         <div className={styles.description}>
-                          <p>{item.weather[0].description}</p>
-                          <p>{item.pop} %</p>
+                          {<p>{item.weather[0].description}</p>}
+                          {<p>{item.pop} %</p>}
                         </div>
                       </div>
                     </li>
