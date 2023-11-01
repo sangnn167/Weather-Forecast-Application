@@ -6,7 +6,7 @@ import { TemperatureToday } from "./components/TemperatureToday";
 import CurrentWeather from "./components/CurrentWeather";
 import {GetCurrentWeather,GetFiveDayForecast,} from "./services/getCurrenWeather";
 import { useDispatch, useSelector } from "react-redux";
-import {setCity,setCurrentWeather,setForecast,setLoading,setTemperatureUnit,} from "./store/slices/search.slice";
+import {setCurrentWeather,setForecast,setLoading,} from "./store/slices/search.slice";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -53,18 +53,11 @@ const App = () => {
     get5DayForecast();
   }, [temperatureUnit, city, dispatch]);
 
-  const handleTemperatureUnitChange = (unit) => {
-    dispatch(setTemperatureUnit(unit));
-  };
-  const handleCityChange = (newCity) => {
-    dispatch(setCity(newCity));
-  };
+  
+  
   return (
     <div className="Container">
-      <Header
-        onTemperatureUnitChange={handleTemperatureUnitChange}
-        onCityChange={handleCityChange}
-      />
+      <Header/>
       {!currentWeather ? (
         <h1 style={{ color: "yellow" }}>Mời bạn nhập đúng tên thành phố</h1>
       ) : (

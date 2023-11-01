@@ -1,23 +1,22 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import styles from "./styles.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setCity, setCityName, toggleTemperatureUnit } from "../../store/slices/search.slice";
 
-export const Header = ({ onTemperatureUnitChange, onCityChange }) => {
-  const [isCelsius, setIsCelsius] = useState(true);
-  const [cityName, setCityName] = useState("");
+export const Header = () => {
+  const dispatch = useDispatch();
+  const cityName = useSelector((state) => state.weather.cityName);
+  const isCelsius = useSelector((state) => state.weather.temperatureUnit === "metric");
   const inputRef = useRef(null);
 
-  const toggleTemperatureUnit = () => {
-    setIsCelsius(!isCelsius);
-    onTemperatureUnitChange(isCelsius ? "imperial" : "metric");
-  };
   const handleCityChange = () => {
     if (!cityName) {
       alert("Vui lòng nhập tên thành phố.");
       inputRef.current.focus();
       return;
     }
-    onCityChange(cityName);
-    setCityName("");
+    dispatch(setCity(cityName));
+    dispatch(setCityName(""));
   };
 
   return (
@@ -30,12 +29,14 @@ export const Header = ({ onTemperatureUnitChange, onCityChange }) => {
           name="text"
           className={styles.input}
           value={cityName}
-          onChange={(e) => setCityName(e.target.value)}
+          onChange={(e) => dispatch(setCityName(e.target.value))}
         />
         <button onClick={handleCityChange}>Tìm kiếm</button>
       </div>
       <div className={styles.headerRight}>
-        <p onClick={toggleTemperatureUnit}>{isCelsius ? "°C" : "°F"}</p>
+        <p onClick={() => dispatch(toggleTemperatureUnit())}>
+          {isCelsius ? "°C" : "°F"}
+        </p>
       </div>
     </div>
   );

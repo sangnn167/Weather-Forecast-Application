@@ -8,7 +8,7 @@ export const weatherSlice  = createSlice({
     currentWeather: null,
     forecast: [],
     loading: true,
-   
+    cityName: "",
   },
   reducers: {
     setTemperatureUnit: (state, action) => {
@@ -26,10 +26,15 @@ export const weatherSlice  = createSlice({
     setLoading: (state,action) => {
         state.loading = action.payload
     },
-    
+    toggleTemperatureUnit: (state) => {
+      state.temperatureUnit = state.temperatureUnit === "metric" ? "imperial" : "metric";
+    },
+    setCityName: (state, action) => {
+      state.cityName = action.payload;
+    },
   },
 });
 
-export const { setTemperatureUnit,setCity,setCurrentWeather,setForecast,setLoading } = weatherSlice.actions;
+export const { setTemperatureUnit,setCity,setCurrentWeather,setForecast,setLoading,toggleTemperatureUnit,setCityName } = weatherSlice.actions;
 
 export default weatherSlice.reducer;
