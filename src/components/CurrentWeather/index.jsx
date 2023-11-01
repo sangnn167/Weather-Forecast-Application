@@ -1,7 +1,13 @@
 import React from "react";
 import styles from "./styles.module.css";
+import { useSelector } from "react-redux";
 
-const CurrentWeather = ({ temperatureUnit, city, currentWeather, loading }) => {
+const CurrentWeather = () => {
+  const city = useSelector((state) => state.weather.city);
+  const currentWeather = useSelector((state) => state.weather.currentWeather);
+  const temperatureUnit = useSelector((state) => state.weather.temperatureUnit);
+  const loading = useSelector((state) => state.weather.loading);
+
   return (
     <div className={styles.containerr}>
       <div className={styles.currentWeather}>

@@ -16,7 +16,6 @@ export const Header = ({ onTemperatureUnitChange, onCityChange }) => {
       inputRef.current.focus();
       return;
     }
-
     onCityChange(cityName);
     setCityName("");
   };

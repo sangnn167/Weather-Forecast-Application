@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Header } from "./components/Header";
 import { FiveDayWeather } from "./components/FiveDayWeather";
 import { TemperatureToday } from "./components/TemperatureToday";
 import CurrentWeather from "./components/CurrentWeather";
-import { GetCurrentWeather } from "./services/getCurrenWeather";
+import {GetCurrentWeather,GetFiveDayForecast,} from "./services/getCurrenWeather";
+import { useDispatch, useSelector } from "react-redux";
+import {setCity,setCurrentWeather,setForecast,setLoading,setTemperatureUnit,} from "./store/slices/search.slice";
 
 const App = () => {
-  const [temperatureUnit, setTemperatureUnit] = useState("metric");
-  const [city, setCity] = useState("Hà Nội");
-  const [currentWeather, setCurrentWeather] = useState();
-  const [loading, setLoading] = useState(true);
-  const [forecast, setForecast] = useState([]);
+  const dispatch = useDispatch();
+  const temperatureUnit = useSelector((state) => state.weather.temperatureUnit);
+  const city = useSelector((state) => state.weather.city);
+  const currentWeather = useSelector((state) => state.weather.currentWeather);
 
   const apiKey = "5d724a92f04ed3bea360323546c88261";
 
@@ -22,42 +23,41 @@ const App = () => {
         apiKey,
         temperatureUnit,
       });
-      console.log(data);
+
       if (data != null) {
-        setCurrentWeather(data);
-        setLoading(false);
+        dispatch(setCurrentWeather(data));
+        dispatch(setLoading(false));
       } else {
-        setCurrentWeather(null);
+        dispatch(setCurrentWeather(null));
       }
     }
     getWeather();
-  }, [temperatureUnit, city]);
+  }, [temperatureUnit, city, dispatch]);
 
   useEffect(() => {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=${temperatureUnit}`
-    )
-      .then((response) => {
-        if (response.status === 404) {
-          return;
-        } else {
-          response.json().then((data) => {
-            setForecast(data.list);
-            setLoading(false);
-          });
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching 5-day forecast:", error);
-        setLoading(false);
+    async function get5DayForecast() {
+      const data = await GetFiveDayForecast({
+        city,
+        apiKey,
+        temperatureUnit,
       });
-  }, [temperatureUnit, city]);
+
+      if (data != null) {
+        dispatch(setForecast(data.list));
+        dispatch(setLoading(false));
+      } else {
+        dispatch(setForecast(null));
+        dispatch(setLoading(false));
+      }
+    }
+    get5DayForecast();
+  }, [temperatureUnit, city, dispatch]);
 
   const handleTemperatureUnitChange = (unit) => {
-    setTemperatureUnit(unit);
+    dispatch(setTemperatureUnit(unit));
   };
   const handleCityChange = (newCity) => {
-    setCity(newCity);
+    dispatch(setCity(newCity));
   };
   return (
     <div className="Container">
@@ -65,34 +65,19 @@ const App = () => {
         onTemperatureUnitChange={handleTemperatureUnitChange}
         onCityChange={handleCityChange}
       />
-      {currentWeather === null ? (
+      {!currentWeather ? (
         <h1 style={{ color: "yellow" }}>Mời bạn nhập đúng tên thành phố</h1>
       ) : (
-        <CurrentWeather
-          temperatureUnit={temperatureUnit}
-          city={city}
-          currentWeather={currentWeather}
-          loading={loading}
-        />
+        <CurrentWeather />
       )}
-      {currentWeather === null ? null : (
+      {!!currentWeather && (
         <div className={"current"}>
-          <FiveDayWeather
-            temperatureUnit={temperatureUnit}
-            city={city}
-            forecast={forecast}
-            loading={loading}
-          />
+          <FiveDayWeather />
         </div>
       )}
-      {currentWeather === null ? null : (
+      {!!currentWeather && (
         <div className="FiveDayForecast">
-          <TemperatureToday
-            temperatureUnit={temperatureUnit}
-            city={city}
-            forecast={forecast}
-            loading={loading}
-          />
+          <TemperatureToday />
         </div>
       )}
     </div>

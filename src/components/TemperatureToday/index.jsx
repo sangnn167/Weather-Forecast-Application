@@ -1,7 +1,14 @@
 import React from "react";
 import styles from "./styles.module.css";
+import { useSelector } from "react-redux";
 
-export const TemperatureToday = ({ temperatureUnit, forecast, loading }) => {
+export const TemperatureToday = () => {
+
+  const temperatureUnit = useSelector((state) => state.weather.temperatureUnit);
+  const forecast = useSelector((state) => state.weather.forecast);
+  const loading = useSelector((state) => state.weather.loading);
+
+
   return (
     <div className={styles.container}>
       {loading ? (
